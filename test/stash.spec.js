@@ -5,11 +5,11 @@ var starflow = require('starflow');
 var helpers = require('./helpers');
 
 beforeEach(function () {
-  // starflow.logger.mute();
+  starflow.logger.mute();
 });
 
 afterEach(function () {
-  // starflow.logger.unmute();
+  starflow.logger.unmute();
 });
 
 describe('Stash', function () {

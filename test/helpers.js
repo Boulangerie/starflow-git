@@ -28,6 +28,56 @@ function gitInit(cwd) {
     var cmd = spawn('git', ['init'], {
       cwd: cwd
     });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
+    cmd.on('error', function (err) {
+      reject(err);
+    });
+    cmd.on('close', function (code) {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject('Error code ' + code);
+      }
+    });
+  });
+}
+
+function gitSetUserEmail(cwd, email) {
+  cwd = path.resolve(cwd || './');
+  return new Promise(function (resolve, reject) {
+    var cmd = spawn('git', ['config', 'user.email', '"' + email + '"'], {
+      cwd: cwd
+    });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
+    cmd.on('error', function (err) {
+      reject(err);
+    });
+    cmd.on('close', function (code) {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject('Error code ' + code);
+      }
+    });
+  });
+}
+
+function gitSetUserName(cwd, name) {
+  cwd = path.resolve(cwd || './');
+  return new Promise(function (resolve, reject) {
+    var cmd = spawn('git', ['config', 'user.name', '"' + name + '"'], {
+      cwd: cwd
+    });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
     cmd.on('error', function (err) {
       reject(err);
     });
@@ -46,6 +96,10 @@ function gitEmptyCommit(cwd) {
   return new Promise(function (resolve, reject) {
     var cmd = spawn('git', ['commit', '--allow-empty', '-m', '"Initial commit"'], {
       cwd: cwd
+    });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
     });
     cmd.on('error', function (err) {
       reject(err);
@@ -66,6 +120,10 @@ function gitCreateAndCheckoutBranch(cwd, name) {
     var cmd = spawn('git', ['checkout', '-b', name], {
       cwd: cwd
     });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
     cmd.on('error', function (err) {
       reject(err);
     });
@@ -82,6 +140,12 @@ function gitCreateAndCheckoutBranch(cwd, name) {
 function initTmpGitEnv(path) {
   return gitInit(path)
     .then(function () {
+      return gitSetUserEmail(path, 'you@example.com');
+    })
+    .then(function () {
+      return gitSetUserName(path, 'Your Name');
+    })
+    .then(function () {
       return gitEmptyCommit(path);
     });
 }
@@ -96,6 +160,10 @@ function gitBranches(cwd) {
     var out = '';
     cmd.stdout.on('data', function (chunk) {
       out += chunk;
+    });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
     });
     cmd.on('error', function (err) {
       reject(err);
@@ -136,6 +204,10 @@ function gitAddFile(cwd, name) {
     var cmd = spawn('git', ['add', name], {
       cwd: cwd
     });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
     cmd.on('error', function (err) {
       reject(err);
     });
@@ -160,6 +232,10 @@ function gitStatus(cwd) {
     cmd.stdout.on('data', function (chunk) {
       out += chunk;
     });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
+    });
     cmd.on('error', function (err) {
       reject(err);
     });
@@ -183,6 +259,10 @@ function gitStashes(cwd) {
     var out = '';
     cmd.stdout.on('data', function (chunk) {
       out += chunk;
+    });
+    cmd.stderr.setEncoding('utf8');
+    cmd.stderr.on('data', function(chunk) {
+      console.log(chunk);
     });
     cmd.on('error', function (err) {
       reject(err);
