@@ -1,6 +1,6 @@
 {
   "name": "starflow-git",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Starflow plugin that provides executables for git steps.",
   "main": "index.js",
   "scripts": {
