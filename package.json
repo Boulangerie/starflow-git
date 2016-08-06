@@ -4,7 +4,7 @@
   "description": "Starflow plugin that provides executables for git steps.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/**/*.spec.js",
     "postversion": "git push && git push --tags"
   },
   "keywords": [
@@ -38,5 +38,12 @@
     "bluebird": "^3.4.1",
     "lodash": "^4.13.1",
     "starflow-shell": "^0.1.3"
+  },
+  "devDependencies": {
+    "bluebird": "^3.4.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.1",
+    "starflow": "^0.1.2",
+    "tmp": "0.0.28"
   }
 }
