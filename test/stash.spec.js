@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var expect = require('chai').expect;
 var stashFactoryWrapper = require('../lib/stash');
 var starflow = require('starflow');
@@ -100,11 +101,9 @@ describe('Stash', function () {
       return helpers
         .gitStatus(res.path)
         .then(function (status) {
-          return {
-            status: status,
-            path: res.path,
-            cleanupCallback: res.cleanupCallback
-          };
+          return _.assign(res, {
+            status: status
+          });
         });
     }
   });
@@ -141,10 +140,9 @@ describe('Stash', function () {
     return helpers
       .gitStashes(res.path)
       .then(function (stashes) {
-        return {
-          stashes: stashes,
-          cleanupCallback: res.cleanupCallback
-        };
+        return _.assign(res, {
+          stashes: stashes
+        });
       });
   }
 

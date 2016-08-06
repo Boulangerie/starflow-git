@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var expect = require('chai').expect;
 var createBranchFactoryWrapper = require('../lib/createBranch');
 var starflow = require('starflow');
@@ -92,10 +93,9 @@ describe('CreateBranch', function () {
     return helpers
       .gitBranches(res.path)
       .then(function (branches) {
-        return {
-          branches: branches,
-          cleanupCallback: res.cleanupCallback
-        };
+        return _.assign(res, {
+          branches: branches
+        });
       });
   }
 

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var expect = require('chai').expect;
 var currentBranchFactoryWrapper = require('../lib/currentBranch');
 var starflow = require('starflow');
@@ -61,10 +62,9 @@ describe('CurrentBranch', function () {
       return currentBranchInstance
         .exec()
         .then(function () {
-          return {
-            currentBranchInstance: currentBranchInstance,
-            cleanupCallback: res.cleanupCallback
-          };
+          return _.assign(res, {
+            currentBranchInstance: currentBranchInstance
+          });
         });
     }
   });
